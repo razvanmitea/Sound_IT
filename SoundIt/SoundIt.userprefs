@@ -1,0 +1,37 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SoundIt\MainActivity.cs">
+    <Files>
+      <File FileName="SoundIt\MainActivity.cs" Line="45" Column="21" />
+      <File FileName="SoundIt\RecordAudio.cs" Line="37" Column="41" />
+      <File FileName="SoundIt\PlayAudio.cs" Line="36" Column="41" />
+      <File FileName="SoundIt\Logger.cs" Line="23" Column="31" />
+      <File FileName="SoundIt\INotifier.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="SoundIt" expanded="True">
+            <Node name="Assets" expanded="True" />
+            <Node name="Properties" expanded="True" />
+            <Node name="Resources" expanded="True">
+              <Node name="drawable" expanded="True" />
+              <Node name="layout" expanded="True" />
+              <Node name="menu" expanded="True" />
+              <Node name="values" expanded="True" />
+            </Node>
+            <Node name="MainActivity.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="D:\Work\Android\SoundIt-51d0041f4dc33978ea6333d6753e6eb9b70f5765\SoundIt\MainActivity.cs" line="41" column="38" />
+      <Breakpoint file="D:\Work\Android\SoundIt-51d0041f4dc33978ea6333d6753e6eb9b70f5765\SoundIt\RecordAudio.cs" line="31" column="15" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.SoundIt MonoForAntroid.PreferredDevice="4in WVGA (Nexus S)" AndroidDeviceId-Debug="emulator-5554" MonoForAntroid.PreferredTheme="Theme.Black.NoTitleBar" />
+</Properties>

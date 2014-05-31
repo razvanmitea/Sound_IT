@@ -5,7 +5,7 @@ namespace SoundIt
 {
     interface INotification
     {
-        void StartAsync ();
+        Task StartAsync ();
 
         void Stop ();
     }

@@ -18,11 +18,12 @@ namespace SoundIt
         public Boolean IsRecording
         {
             get { return (isRecording); }
+            set{ this.isRecording = value;}
         }
 
-        protected void ReadAudioAsync()
+        protected Task ReadAudioAsync()
         {
-            //return new Task(()=>{
+            return new Task(()=>{
                while(isRecording)
                 {
                     try
@@ -31,8 +32,8 @@ namespace SoundIt
                         audioRecord.Read(audioBuffer, 0, audioBuffer.Length);
                         fullAudioBuffer.AddRange(audioBuffer);
                         audioBuffer = new short[512];
-                        if(fullAudioBuffer.Count > 10000)
-                            break;
+                        //if(fullAudioBuffer.Count > 100000)
+                        //    break;
                     }
                     catch (Exception ex)
                     {
@@ -41,10 +42,10 @@ namespace SoundIt
                         break;
                     }
                 }
-           // });
+            });
         }
 
-        protected void StartRecorderAsync()
+        protected Task StartRecorderAsync()
         {
             isRecording = true;
 
@@ -54,22 +55,22 @@ namespace SoundIt
                 audioRecord.StartRecording();
 
                 // Off line this so that we do not block the UI thread.
-                ReadAudioAsync();
+                return ReadAudioAsync();
             }
-            //return null;
+            return null;
         }
 
 
-        public void StartAsync()
+        public Task StartAsync()
         {
             fullAudioBuffer.Clear();
-            StartRecorderAsync();
+            return StartRecorderAsync();
         }
 
         public void Stop()
         {
-            isRecording = false;
             audioRecord.Stop ();
+            isRecording = false;
             Thread.Sleep(500); // Give it time to drop out.
             audioRecord.Release ();
         }

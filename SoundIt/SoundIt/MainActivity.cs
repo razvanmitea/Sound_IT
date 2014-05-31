@@ -12,6 +12,7 @@ using Android.Util;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using Android.Graphics;
 
 namespace SoundIt
 {
@@ -27,49 +28,47 @@ namespace SoundIt
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-			Button buttonRec = FindViewById<Button> (Resource.Id.myButton);
+			Button buttonRec = FindViewById<Button> (Resource.Id.btnRec);
 			Button buttonPlay = FindViewById<Button> (Resource.Id.btnPlay);
-            ToggleButton buttonRecT = FindViewById<ToggleButton> (Resource.Id.toggleButton1);
             EditText editTextBox = FindViewById<EditText>(Resource.Id.editText1);
             RecordAudio recAudio = new RecordAudio();
             PlayAudio playAudio = new PlayAudio ();
 
-            buttonRecT.Click += (sender, e) => {
+            buttonRec.Click += (sender, e) => {
 
-                if (buttonRecT.Checked) {
+                if(!recAudio.IsRecording)
+                {
+                    buttonRec.SetTextColor(Color.Red);
+                    editTextBox.Text = string.Empty;
                     Toast.MakeText(this, "Recording", ToastLength.Short).Show();
                     Logger.LogThis("Started recording at " + DateTime.Now.ToString(), "Recording button", "MainActivity");
                     //ThreadPool.QueueUserWorkItem(o=>recAudio.StartAsync());
-                    recAudio.StartAsync();
+                    RunOnUiThread(() =>recAudio.StartAsync().Start());
                 }
                 else
                 {
+                    buttonRec.SetTextColor(Color.White);
                     RunOnUiThread(() => recAudio.Stop());
-                    Toast.MakeText(this, "Stopped", ToastLength.Short).Show();
+                    Toast.MakeText(this, "Stopped recording!", ToastLength.Short).Show();
+                    Log.Info("Stopped","Stopped recording at " + DateTime.Now.ToString() + System.Environment.NewLine + "Full audio buffer length is: " + RecordAudio.fullAudioBuffer.Count.ToString());                   
+                    editTextBox.Text = (RecordAudio.fullAudioBuffer.Count / 1000).ToString() + " KB recorded!";
+                }  
 
-                    Log.Info("Stopped","Stopped recording at " + DateTime.Now.ToString());
-                    //OutputEachByte(editTextBox,false);
-                    /*
-                    var anyDiffZero = RecordAudio.fullAudioBuffer.AsEnumerable().Where(b=>b != 0).Any();
-                    if(anyDiffZero)
-                    {
-                        editTextBox.Text = "I have something != 0";
-                        Thread.Sleep(500);
-                        OutputEachByte(editTextBox,true);
-                    }
-                    else
-                    {
-                        editTextBox.Text = "There all zeros";
-                    }
-                    */
-                }   
-                
+                buttonPlay.Enabled = !recAudio.IsRecording;
+
             };
 
             buttonPlay.Click += (sender, e) => 
             {   
+                if(RecordAudio.fullAudioBuffer.Count == 0)
+                {
+                    Toast.MakeText(this, "Nothing to play yet!", ToastLength.Short).Show();
+                    return;
+                }
+
                 editTextBox.Text = "Playing.. ";
                 playAudio.StartAsync().Start();
+                editTextBox.Text = string.Empty;
             };
 		}
 
